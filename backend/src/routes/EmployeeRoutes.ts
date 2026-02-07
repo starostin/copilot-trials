@@ -1,4 +1,5 @@
 import express, { Application, Router } from "express";
+import cors from 'cors'
 import { EmployeeController } from "../controllers/EmployeeController";
 
 
@@ -10,10 +11,15 @@ export class EmployeeRoutes {
     constructor(app: Application) {
         this.app = app;
         this.router.use(express.json());
+         this.router.use(
+            cors({
+                origin: '*'
+            })
+        )
         this.app.use("/api", this.router);
     }
 
-    public initializeRoutes() {    
+    public initializeRoutes() {
         this.router.get("/employees", async (req, res) => {
             await this.employeeController.getAllEmployees(req, res);
         });

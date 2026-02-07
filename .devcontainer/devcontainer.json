@@ -1,0 +1,46 @@
+{
+    "name": "JavaScript Project",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+    "features": {
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.12",
+            "installTools": true,
+            "installJupyterlab": false
+        },
+        "ghcr.io/devcontainers/features/git:1": {},
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {
+            "version": "latest",
+            "enableNonRootDocker": "true",
+            "moby": false
+        },
+        "ghcr.io/devcontainers-extra/features/zsh-plugins:0": {
+            "plugins": "git zsh-syntax-highlighting zsh-autosuggestions",
+            "omzPlugins": "https://github.com/zsh-users/zsh-syntax-highlighting https://github.com/zsh-users/zsh-autosuggestions"
+        },
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": "true",
+            "configureZshAsDefaultShell": "true"
+        }
+    },
+    "customizations": {
+       "settings": { 
+          "terminal.integrated.defaultProfile.linux": "zsh",
+          "python.defaultInterpreterPath": "/usr/local/bin/python"
+       },
+        "vscode": {
+            "extensions": [
+                "ms-python.python",             // Python language support
+                "ms-python.vscode-pylance",     // IntelliSense for Python
+
+                "dbaeumer.vscode-eslint",               // ESLint
+                "esbenp.prettier-vscode",               // Prettier
+                "christian-kohler.path-intellisense",   // Path Intellisense
+                "humao.rest-client",                    // REST Client
+                "streetsidesoftware.code-spell-checker",// Code Spell Checker
+                "mechatroner.rainbow-csv",              // Rainbow CSV
+                "ms-azuretools.vscode-docker",           // Docker,
+                "mikestead.dotenv"                       // Dotenv
+            ]
+        }
+    }
+}

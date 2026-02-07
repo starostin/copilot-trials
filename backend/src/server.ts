@@ -1,5 +1,6 @@
-import express from 'express';
-import { EmployeeRoutes } from './routes/EmployeeRoutes';
+
+import express from 'express'
+import { EmployeeRoutes } from './routes/EmployeeRoutes'
 
 export class Server {
     private app = express();
