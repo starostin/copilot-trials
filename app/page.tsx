@@ -1,6 +1,11 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import Image from "next/image";
+import { Header } from "@/components/header";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Link2, Zap, BarChart3, Shield, Clock, Globe } from "lucide-react";
+import Link from "next/link";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -10,64 +15,146 @@ export default async function Home() {
   }
   
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      {/* Hero Section */}
+      <section className="container mx-auto px-4 py-20 md:py-32">
+        <div className="mx-auto max-w-4xl text-center">
+          <Badge variant="secondary" className="mb-4">
+            Free & Fast URL Shortening
+          </Badge>
+          <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground md:text-6xl">
+            Shorten Your Links,
+            <br />
+            Amplify Your Reach
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mb-8 text-lg text-muted-foreground md:text-xl">
+            Create short, memorable links in seconds. Track clicks, analyze
+            performance, and share with confidence. Perfect for marketers,
+            businesses, and content creators.
           </p>
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link href="/dashboard">
+              <Button size="lg" className="gap-2">
+                <Zap className="h-5 w-5" />
+                Get Started Free
+              </Button>
+            </Link>
+            <Button size="lg" variant="outline" asChild>
+              <a href="#features">Learn More</a>
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="border-t border-border bg-muted/50 py-20">
+        <div className="container mx-auto px-4">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground">
+              Powerful Features
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Everything you need to manage and track your shortened links
+            </p>
+          </div>
+          
+          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <Card>
+              <CardHeader>
+                <Link2 className="mb-2 h-10 w-10 text-primary" />
+                <CardTitle>Instant Shortening</CardTitle>
+                <CardDescription>
+                  Create shortened links in milliseconds. No delays, no hassle.
+                  Just paste your URL and go.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <BarChart3 className="mb-2 h-10 w-10 text-primary" />
+                <CardTitle>Analytics Dashboard</CardTitle>
+                <CardDescription>
+                  Track clicks, monitor performance, and gain insights with
+                  detailed analytics for every link.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <Shield className="mb-2 h-10 w-10 text-primary" />
+                <CardTitle>Secure & Reliable</CardTitle>
+                <CardDescription>
+                  Your links are protected with enterprise-grade security.
+                  99.9% uptime guaranteed.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <Clock className="mb-2 h-10 w-10 text-primary" />
+                <CardTitle>Custom Expiration</CardTitle>
+                <CardDescription>
+                  Set expiration dates for your links. Perfect for time-sensitive
+                  campaigns and promotions.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <Globe className="mb-2 h-10 w-10 text-primary" />
+                <CardTitle>Custom Domains</CardTitle>
+                <CardDescription>
+                  Use your own branded domain for shortened links. Build trust
+                  and reinforce your brand.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <Zap className="mb-2 h-10 w-10 text-primary" />
+                <CardTitle>Lightning Fast</CardTitle>
+                <CardDescription>
+                  Blazing fast redirects with global CDN coverage. Your users
+                  won't even notice the redirect.
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* CTA Section */}
+      <section className="container mx-auto px-4 py-20">
+        <div className="mx-auto max-w-3xl rounded-lg border border-border bg-card px-8 py-12 text-center shadow-sm">
+          <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground">
+            Ready to Get Started?
+          </h2>
+          <p className="mb-8 text-lg text-muted-foreground">
+            Join thousands of users who trust our platform for their link
+            shortening needs. No credit card required.
+          </p>
+          <Link href="/dashboard">
+            <Button size="lg" className="gap-2">
+              <Zap className="h-5 w-5" />
+              Create Your First Link
+            </Button>
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-border py-8">
+        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
+          <p>© {new Date().getFullYear()} Link Shortener. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 }
