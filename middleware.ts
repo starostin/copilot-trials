@@ -1,5 +1,7 @@
 // Middleware disabled for demo purposes
-// To enable Clerk authentication, uncomment the code below and set NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+// To enable Clerk authentication, uncomment the code below and configure environment variables
+
+import { NextResponse } from "next/server";
 
 // import { clerkMiddleware } from "@clerk/nextjs/server";
 
@@ -15,8 +17,8 @@
 // };
 
 export function middleware() {
-  // No-op middleware
-  return;
+  // No-op middleware - pass through all requests
+  return NextResponse.next();
 }
 
 export const config = {

@@ -4,11 +4,11 @@ import Link from "next/link";
 
 export function Header() {
   const handleSignIn = () => {
-    alert("Sign in functionality requires Clerk configuration. Please set NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY in .env.local");
+    alert("Sign in functionality requires Clerk configuration in your environment");
   };
   
   const handleSignUp = () => {
-    alert("Sign up functionality requires Clerk configuration. Please set NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY in .env.local");
+    alert("Sign up functionality requires Clerk configuration in your environment");
   };
   
   return (

@@ -5,12 +5,12 @@ import { Link2, BarChart3, Zap, Shield } from "lucide-react";
 export default function Home() {
   const handleGetStarted = () => {
     // This would normally open Clerk SignUp modal
-    alert("Sign up functionality requires Clerk configuration. Please set NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY in .env.local");
+    alert("Sign up functionality requires Clerk configuration in your environment");
   };
   
   const handleSignIn = () => {
     // This would normally open Clerk SignIn modal
-    alert("Sign in functionality requires Clerk configuration. Please set NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY in .env.local");
+    alert("Sign in functionality requires Clerk configuration in your environment");
   };
   
   return (
@@ -116,7 +116,7 @@ export default function Home() {
                 Secure & Reliable
               </h3>
               <p className="text-zinc-600 dark:text-zinc-400">
-                Enterprise-grade security with 99.9% uptime guarantee and automatic backups.
+                Enterprise-grade security with reliable uptime and automatic backups.
               </p>
             </div>
           </div>
@@ -130,7 +130,7 @@ export default function Home() {
             Ready to get started?
           </h2>
           <p className="mb-8 text-lg text-blue-50">
-            Join thousands of users who trust us with their links. Start shortening today!
+            Join users around the world who trust us with their links. Start shortening today!
           </p>
           <button 
             onClick={handleGetStarted}
