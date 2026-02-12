@@ -39,7 +39,8 @@
                 "streetsidesoftware.code-spell-checker",// Code Spell Checker
                 "mechatroner.rainbow-csv",              // Rainbow CSV
                 "ms-azuretools.vscode-docker",           // Docker,
-                "mikestead.dotenv"                       // Dotenv
+                "mikestead.dotenv",                       // Dotenv
+                "eamodio.gitlens"                         // GitLens
             ]
         }
     }
