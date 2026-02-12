@@ -1,18 +1,23 @@
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import { Header } from "@/components/header";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+"use client";
+
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AuthButton } from "@/components/auth-button";
 import { Button } from "@/components/ui/button";
 import { Link2, Zap, BarChart3, Shield, Clock, Globe } from "lucide-react";
-import Link from "next/link";
 
-export default async function Home() {
-  const { userId } = await auth();
-  
-  if (userId) {
-    redirect("/dashboard");
-  }
+export default function Home() {
+  const { isSignedIn } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isSignedIn) {
+      router.push("/dashboard");
+    }
+  }, [isSignedIn, router]);
   
   return (
     <div className="min-h-screen bg-background">
@@ -33,12 +38,10 @@ export default async function Home() {
             businesses, and content creators.
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link href="/dashboard">
-              <Button size="lg" className="gap-2">
-                <Zap className="h-5 w-5" />
-                Get Started Free
-              </Button>
-            </Link>
+            <AuthButton size="lg" className="gap-2">
+              <Zap className="h-5 w-5" />
+              Get Started Free
+            </AuthButton>
             <Button size="lg" variant="outline" asChild>
               <a href="#features">Learn More</a>
             </Button>
@@ -120,7 +123,7 @@ export default async function Home() {
                 <CardTitle>Lightning Fast</CardTitle>
                 <CardDescription>
                   Blazing fast redirects with global CDN coverage. Your users
-                  won't even notice the redirect.
+                  won&apos;t even notice the redirect.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -138,12 +141,10 @@ export default async function Home() {
             Join thousands of users who trust our platform for their link
             shortening needs. No credit card required.
           </p>
-          <Link href="/dashboard">
-            <Button size="lg" className="gap-2">
-              <Zap className="h-5 w-5" />
-              Create Your First Link
-            </Button>
-          </Link>
+          <AuthButton size="lg" className="gap-2">
+            <Zap className="h-5 w-5" />
+            Create Your First Link
+          </AuthButton>
         </div>
       </section>
 
