@@ -3,8 +3,8 @@ import { redirect } from "next/navigation";
 import { getUserLinks } from "@/data/links";
 import { LinkCard } from "@/components/link-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Plus, Link2 } from "lucide-react";
+import { CreateLinkDialog } from "@/components/create-link-dialog";
+import { Link2 } from "lucide-react";
 
 export default async function DashboardPage() {
   const { userId } = await auth();
@@ -24,10 +24,7 @@ export default async function DashboardPage() {
             Manage your shortened links and track their performance
           </p>
         </div>
-        <Button className="gap-2 sm:w-auto">
-          <Plus className="h-4 w-4" />
-          Create New Link
-        </Button>
+        <CreateLinkDialog />
       </div>
       
       {userLinks.length === 0 ? (
@@ -42,10 +39,7 @@ export default async function DashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex justify-center">
-            <Button className="gap-2">
-              <Plus className="h-4 w-4" />
-              Create Your First Link
-            </Button>
+            <CreateLinkDialog variant="empty" />
           </CardContent>
         </Card>
       ) : (

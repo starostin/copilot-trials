@@ -1,9 +1,23 @@
 "use client";
 
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Link2, ExternalLink, Copy, Trash2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Link2, ExternalLink, Copy, Trash2, Loader2 } from "lucide-react";
+import { EditLinkDialog } from "@/components/edit-link-dialog";
+import { deleteLinkAction } from "@/app/dashboard/actions";
 
 interface LinkCardProps {
   id: string;
@@ -12,12 +26,25 @@ interface LinkCardProps {
   createdAt: string;
 }
 
-export function LinkCard({ shortCode, originalUrl, createdAt }: LinkCardProps) {
+export function LinkCard({ id, shortCode, originalUrl, createdAt }: LinkCardProps) {
+  const [isDeleting, setIsDeleting] = useState(false);
   const shortUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/${shortCode}`;
   
   const handleCopy = async () => {
     await navigator.clipboard.writeText(shortUrl);
     // TODO: Add toast notification
+  };
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    const result = await deleteLinkAction(id);
+    
+    if (result.error) {
+      // TODO: Show error toast
+      console.error("Failed to delete link:", result.error);
+      setIsDeleting(false);
+    }
+    // No need to set loading false on success since the component will unmount
   };
   
   return (
@@ -64,14 +91,55 @@ export function LinkCard({ shortCode, originalUrl, createdAt }: LinkCardProps) {
                 Visit
               </a>
             </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              className="gap-2 text-destructive hover:bg-destructive hover:text-destructive-foreground"
-            >
-              <Trash2 className="h-4 w-4" />
-              Delete
-            </Button>
+            <EditLinkDialog
+              id={id}
+              currentShortCode={shortCode}
+              currentOriginalUrl={originalUrl}
+            />
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="gap-2 text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Trash2 className="h-4 w-4" />
+                  )}
+                  Delete
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will permanently delete the short link{" "}
+                    <span className="font-mono font-semibold">{shortCode}</span>.
+                    This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={handleDelete}
+                    disabled={isDeleting}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                  >
+                    {isDeleting ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Deleting...
+                      </>
+                    ) : (
+                      "Delete"
+                    )}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       </CardContent>

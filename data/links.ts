@@ -3,6 +3,27 @@ import { links } from '@/db/schema';
 import { eq, desc } from 'drizzle-orm';
 
 /**
+ * Creates a new shortened link
+ * @param data - The link data including shortCode, originalUrl, and userId
+ * @returns The created link object
+ */
+export async function createLink(data: {
+  shortCode: string;
+  originalUrl: string;
+  userId: string;
+}) {
+  const [link] = await db
+    .insert(links)
+    .values({
+      ...data,
+      updatedAt: new Date(),
+    })
+    .returning();
+  
+  return link;
+}
+
+/**
  * Fetches all links for a specific user
  * @param userId - The Clerk user ID
  * @returns Array of links ordered by most recently created
@@ -51,4 +72,55 @@ export async function getUserLinkById(id: string, userId: string) {
   }
   
   return link;
+}
+
+/**
+ * Updates a link by ID
+ * @param id - The link ID
+ * @param userId - The Clerk user ID
+ * @param data - The data to update
+ * @returns The updated link object or undefined
+ */
+export async function updateLink(
+  id: string,
+  userId: string,
+  data: {
+    shortCode?: string;
+    originalUrl?: string;
+  }
+) {
+  // Verify ownership before updating
+  const existingLink = await getUserLinkById(id, userId);
+  if (!existingLink) {
+    return undefined;
+  }
+
+  const [updatedLink] = await db
+    .update(links)
+    .set({
+      ...data,
+      updatedAt: new Date(),
+    })
+    .where(eq(links.id, id))
+    .returning();
+
+  return updatedLink;
+}
+
+/**
+ * Deletes a link by ID
+ * @param id - The link ID
+ * @param userId - The Clerk user ID
+ * @returns True if deleted successfully, false otherwise
+ */
+export async function deleteLink(id: string, userId: string) {
+  // Verify ownership before deleting
+  const existingLink = await getUserLinkById(id, userId);
+  if (!existingLink) {
+    return false;
+  }
+
+  await db.delete(links).where(eq(links.id, id));
+
+  return true;
 }
