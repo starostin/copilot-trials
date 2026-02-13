@@ -1,3 +1,7 @@
+---
+description: Read this before implementing any authentication-related features in the project. This file outlines the architecture and best practices for using Clerk as the authentication provider.
+---
+
 # Authentication Architecture
 
 ## Overview

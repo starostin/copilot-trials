@@ -2,17 +2,6 @@
 
 This project is a **Next.js 16 Link Shortener** application with TypeScript, employing modern best practices and conventions.
 
-## 📚 Documentation Structure
-
-Agent instructions are organized into separate files for clarity.
-
-> **⚠️ CRITICAL**: It is **ABSOLUTELY MANDATORY** to read the relevant individual instruction files within the `/docs` directory. You **MUST** read and apply the standards defined in these files **BEFORE** generating any code.
-
-ALWAYS refer to the relevant .md file BEFORE generating any code:
-
-- **[Authentication](./docs/authentication.md)**: Clerk authentication, protected routes, and user management
-- **[UI Components](./docs/ui-components.md)**: shadcn/ui component standards and usage
-
 
 ## 🎯 Quick Reference
 

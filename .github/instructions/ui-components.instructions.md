@@ -1,3 +1,8 @@
+---
+description: Read this before creating or modifying any UI components in the project. This file outlines the standards for using shadcn/ui components and Tailwind CSS for styling.
+---
+
+
 # UI Components - shadcn/ui Standards
 
 ## Core Principle
