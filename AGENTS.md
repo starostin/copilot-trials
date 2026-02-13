@@ -34,6 +34,7 @@ ALWAYS refer to the relevant .md file BEFORE generating any code:
 5. **Semantic HTML**: Proper accessibility and semantic markup
 6. **Responsive Design**: Mobile-first with Tailwind utilities
 7. **Performance**: Optimize images, fonts, and bundle size
+8. **Use proxy.ts**: Always use `proxy.ts` for route protection, NOT `middleware.ts` (deprecated)
 
 ### Path Aliases
 ```typescript
@@ -67,3 +68,4 @@ When working on this project:
 - Implement proper loading and error states
 - Consider server-side vs client-side rendering implications
 - Follow Next.js App Router conventions strictly
+- **NEVER use `middleware.ts`** - always use `proxy.ts` for route protection (middleware.ts is deprecated in Next.js 16)

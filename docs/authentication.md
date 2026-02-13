@@ -18,7 +18,7 @@ This application uses **Clerk** as the exclusive authentication provider. No oth
 - `/dashboard` - Requires authentication
 - Any routes under `/dashboard/*` - Requires authentication
 
-**Implementation**: Use Clerk's middleware or `auth()` helper to verify authentication before rendering protected pages.
+**Implementation**: Use Clerk's proxy pattern (see `proxy.ts`) or `auth()` helper to verify authentication before rendering protected pages.
 
 ### Redirect Behavior
 
@@ -55,20 +55,27 @@ Always configure Clerk components to use modal mode:
 </ClerkProvider>
 ```
 
-### Middleware Pattern
+### Proxy Pattern
 
-Use Clerk middleware to protect routes:
+Use Clerk proxy configuration to protect routes:
 
 ```typescript
-// middleware.ts
+// proxy.ts
 import { clerkMiddleware } from '@clerk/nextjs/server';
 
 export default clerkMiddleware();
 
 export const config = {
-  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // Always run for API routes
+    "/(api|trpc)(.*)",
+  ],
 };
 ```
+
+**Note**: This project uses `proxy.ts` instead of `middleware.ts` as the latter is deprecated in Next.js 16.
 
 ### Page-Level Protection
 

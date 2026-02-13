@@ -25,7 +25,11 @@ export function AuthButton({
   return (
     <>
       <SignedOut>
-        <SignInButton mode="modal">
+        <SignInButton 
+          mode="modal"
+          forceRedirectUrl={redirectTo}
+          fallbackRedirectUrl={redirectTo}
+        >
           <Button size={size} variant={variant} className={className}>
             {children}
           </Button>
