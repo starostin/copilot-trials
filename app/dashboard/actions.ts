@@ -8,7 +8,21 @@ import { revalidatePath } from "next/cache";
 
 // Define Zod schema for validation
 const createLinkSchema = z.object({
-  originalUrl: z.string().url("Please enter a valid URL"),
+  originalUrl: z
+    .string()
+    .url("Please enter a valid URL")
+    .max(2048, "URL must be less than 2048 characters")
+    .refine(
+      (url) => {
+        try {
+          const parsed = new URL(url);
+          return ['http:', 'https:'].includes(parsed.protocol);
+        } catch {
+          return false;
+        }
+      },
+      { message: "URL must use HTTP or HTTPS protocol" }
+    ),
   shortCode: z
     .string()
     .min(3, "Short code must be at least 3 characters")
@@ -71,7 +85,21 @@ export async function createLinkAction(data: {
 
 const updateLinkSchema = z.object({
   id: z.string().uuid("Invalid link ID"),
-  originalUrl: z.string().url("Please enter a valid URL"),
+  originalUrl: z
+    .string()
+    .url("Please enter a valid URL")
+    .max(2048, "URL must be less than 2048 characters")
+    .refine(
+      (url) => {
+        try {
+          const parsed = new URL(url);
+          return ['http:', 'https:'].includes(parsed.protocol);
+        } catch {
+          return false;
+        }
+      },
+      { message: "URL must use HTTP or HTTPS protocol" }
+    ),
   shortCode: z
     .string()
     .min(3, "Short code must be at least 3 characters")
